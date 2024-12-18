@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import { router as voyageRoutes } from './routes/voyages';
+import { connectDatabase } from './config/database';
+import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
@@ -18,24 +19,19 @@ app.get('/', (req, res) => {
 });
 
 // Error handling middleware
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Une erreur est survenue !' });
-});
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 8080;
 
 // Connect to MongoDB and start server
 const startServer = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/agence-voyage');
-    console.log('Connecté à MongoDB');
-    
+    await connectDatabase();
     app.listen(PORT, () => {
       console.log(`Serveur démarré sur le port ${PORT}`);
     });
   } catch (error) {
-    console.error('Erreur de connexion à MongoDB:', error);
+    console.error('Erreur de démarrage du serveur:', error);
     process.exit(1);
   }
 };
