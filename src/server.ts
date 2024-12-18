@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { router as voyageRoutes } from './routes/voyages';
+import { router as userRoutes } from './routes/users';
+import { router as reservationRoutes } from './routes/reservations';
 import { connectDatabase } from './config/database';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -12,6 +14,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/voyages', voyageRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // Base route
 app.get('/', (req, res) => {
