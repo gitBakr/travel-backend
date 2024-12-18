@@ -1,35 +1,21 @@
 import mongoose from 'mongoose';
 
 const voyageSchema = new mongoose.Schema({
-  titre: {
+  type: {
     type: String,
+    enum: ['Hajj', 'Omra'],
     required: true,
   },
-  destination: {
-    type: String,
-    required: true,
-  },
-  prix: {
-    type: Number,
-    required: true,
-  },
-  dateDepart: {
+  date: {
     type: Date,
     required: true,
   },
-  duree: {
-    type: Number,
-    required: true,
-  },
-  description: {
+  option: {
     type: String,
+    enum: ['Standard', 'Confort', 'VIP'],
     required: true,
   },
-  imageUrl: {
-    type: String,
-    required: true,
-  },
-  placesDisponibles: {
+  prix: {
     type: Number,
     required: true,
     min: 0,
